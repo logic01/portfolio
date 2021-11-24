@@ -10,6 +10,7 @@
 *.userosscache
 *.sln.docstates
 
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
@@ -17,6 +18,7 @@
 mono_crash.*
 
 # Build results
+.vscode/
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
@@ -348,3 +350,4 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
