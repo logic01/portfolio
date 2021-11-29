@@ -19,7 +19,7 @@ namespace Two_Sum
             BasicRoutine(new int[] { 3, 3 }, 6);
             DictionaryRoutine(new int[] { 3, 3 }, 6);
 
-         /*   Console.WriteLine("Last");
+         /* Console.WriteLine("Last");
             var nums = FillArray(100);
 
             var random = new Random();
