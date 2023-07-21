@@ -1,8 +1,4 @@
-﻿
-
-using System;
-
-namespace LeetCode.Wave.Two
+﻿namespace LeetCode.Wave.Two
 {
     public static class SlidingWindows
     {

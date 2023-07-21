@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LeetCode.Wave.Two
+﻿namespace LeetCode.Wave.Two
 {
     /// <summary>
     /// Given a list of intervals, merge all the overlapping intervals to produce a list 

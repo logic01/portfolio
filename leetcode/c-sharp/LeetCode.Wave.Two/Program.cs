@@ -1,6 +1,5 @@
-﻿using LeetCode.Wave.Two.Util;
-
-using System.Collections.Generic;
+﻿using LeetCode.Wave.Two.Practice;
+using LeetCode.Wave.Two.Util;
 
 namespace LeetCode.Wave.Two
 {
@@ -41,7 +40,9 @@ namespace LeetCode.Wave.Two
             // add cycle
             root_two.next.next.next.next = root_two;
 
-            ReverseLinkedList.Do(root_two);
+            ReverseLinkedList_One.Do(root_two);
+
+
 
         }
     }

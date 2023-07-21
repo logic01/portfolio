@@ -1,11 +1,5 @@
 ﻿using LeetCode.Wave.Two.Util;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace LeetCode.Wave.Two
 {
     /// <summary>
@@ -32,14 +26,6 @@ namespace LeetCode.Wave.Two
                 cur.next = prev;
                 prev = cur;
                 cur = next;
-
-                // end at cycle
-                if (cur == root)
-                {
-                    // reset cycle
-                    prev.next = cur;
-                    break;
-                }
             }
 
             // this will be the last good node before we hit null end
