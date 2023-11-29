@@ -1,0 +1,34 @@
+Hello,
+
+As requested during our conversations, I am providing a summary of my thoughts so we can work together to clearly define the role, responsibilities and expectations.
+
+From my experience I have found that TU conflates the roles of Team Lead and Tech Lead and this blurred vision had lead me to this point. I am sure you are all aware of the differences but for consistency I will include my understandings of those roles below.
+
+A team lead deals with the teams productivity and capacity, they are responsible for assessing the workflow, and giving directions to the developers of the team. A Tech Lead makes decisions concerning programming languages, frameworks, tools, and are responsible for code quality as well as design. 
+
+The biggest point I would like to make is my desire to lean in to the Tech Lead responsibilities and naturally that leaves less time/capacity for the Team Lead responsibilities. I believe there have been other’s in my role who have done the same to varying degrees.
+
+Team Lead
+•	As a Team Lead I would like enhanced clarity regarding the individuals I am accountable for.
+o	It has been my experience that if I do not take ownership of mapping meetings then we to often produce no stories and my team has no defined work for upcoming PI’s or Sprints.
+	In this regard the stopping, starting and re-assignment of features leaves us with blank PI boards and empty story sprints.
+o	It has been my experience that if I do not end a team meeting or request everyone to stay on goal (standup, mapping, ect) that the meeting often doesn’t end.
+o	It has been my experience that if I do not actively intervene in the QA automation that we are often forced to accept wildly fluctuating pass rates, inability to test consistently across environments and a very hazy outlook of next steps to bring it back to stable.
+•	As a Team Lead I would like enhanced clarity regarding the individuals whom I am anticipated to receive work assignments. I get requests from a multitude of places and the last time I tried to explain that these need to come through a single source I was spoken to in a very rude manner. I feel I need some level of insulation from external resources that place demands on my time and attention or more clarity on the expectations of the role.
+o	The PING team requests we verify their changes.
+o	Bruce Files requests we change build tools when they make updates.
+o	Matt Klinker requests we change infosec scans and cloud infrastructure.
+o	Mark Stein requests we update AMI’s.
+o	Shamin requests we test Kong routing.
+o	I feel the AWS migration work exacerbated this beyond my ability to control. I often found myself taking direction from Shamin, Matt and Dave on a regular basis.
+
+Tech Lead
+•	As a Tech Lead I believe my primary responsibility is to prevent technological mistakes from costing us time, resources and customers.
+o	In this regard I feel I have proven my advice sound. 
+o	I also feel that despite my sound advice I have had zero impact on some of the most important technology decisions we have made and I am often listed to only after the impact has been demonstrated and it’s too late to change.
+•	As a Tech Lead I would like a rededication to the responsibility for ensuring the punctual delivery of my team’s work products, prioritizing this commitment over the requirements of other teams.
+o	I have spent a lot of time and effort designing processes, branching strategies, deployment strategies, and architectural insights that cross team boundaries. Naturally this has given me a lot of responsibilities in making sure other teams adhere to these standards. With the huge expansion of teams and the desire for no team to own a product it’s no longer viable for me to ensure every other team follows them.
+
+Hopefully I have laid out my thoughts and examples in a reasonable manor and that this email is helpful in our continued discussions moving forward.
+
+-Thanks
