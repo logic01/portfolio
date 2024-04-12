@@ -7,12 +7,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Q_0543._Diameter_of_Binary_Tree.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Q_0543._Diameter_of_Binary_Tree.cs" />
-  </ItemGroup>
-
 </Project>

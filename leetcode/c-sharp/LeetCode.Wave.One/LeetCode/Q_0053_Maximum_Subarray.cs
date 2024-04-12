@@ -20,6 +20,8 @@
             return Divide(nums, 0, nums.Length - 1);
         }
 
+        // time & space
+        // t-O(n \ log n)) s-O(1)
         public static int Divide(int[] nums, int start, int end)
         {
             if (start > end)

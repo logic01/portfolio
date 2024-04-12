@@ -2,6 +2,7 @@
 {
     // -2147483648 to 2147483647
 
+    // Convert an Integer into it's reverse.
     public static class Q_0007_Reverse_Integer
     {
         public static int Reverse(int x)
