@@ -1,47 +1,84 @@
-﻿using System.Collections.Concurrent;
-
-namespace Algorithms.Practice.RoundOne
+﻿namespace Algorithms.Practice.RoundOne
 {
-    public static class Parallelism
+    public class Parallelism
     {
-        public static async Task Do()
+        public void ParallelFor()
         {
-            int[] data = [1, 2, 3, 4, 5];
+            int[] items = [1, 2, 3, 4];
 
-            ConcurrentBag<int> concurrentData = [];
-
-            Parallel.ForEach(data, item =>
+            Parallel.For(0, items.Length, (index) =>
             {
-                Task.Delay(100);
-                item++;
-                concurrentData.Add(item);
+                items[index]++;
             });
+        }
+       
+        public async void ParallelForAsync()
+        {
+            int[] items = [1, 2, 3, 4];
 
-            foreach (var val in concurrentData)
+            await Parallel.ForAsync(0, items.Length, async (index, token) =>
             {
-                Console.WriteLine(val);
-            }
-
-            ConcurrentBag<int> concurrentTwo = [];
-            ParallelOptions parallelOptions = new()
-            {
-                MaxDegreeOfParallelism = 3
-            };
-
-            await Parallel.ForEachAsync(data, parallelOptions, async (item, token) =>
-            {
-                await Task.Delay(100, token);
-                item++;
-                concurrentTwo.Add(item);
+                index++;
+                await Task.Yield();
             });
+        }
 
+        public void ParallelForLocal()
+        {
+            int[] items = [1, 2, 3, 4];
+            int total = 0;
 
-            foreach (var val in concurrentTwo)
+            Parallel.For(0, items.Length, () => 0,
+                (index, loop, subtotal) =>
+                {
+                    subtotal += items[index];
+                    return subtotal;
+                },
+                subtotal => Interlocked.Add(ref total, subtotal)
+            );
+        }
+
+        public void ParallelForEach()
+        {
+            int[] items = [1, 2, 3, 4];
+
+            Parallel.ForEach(items, (item) =>
             {
-                Console.WriteLine(val);
-            }
+                item++;
+            });
+        }
 
+        public async void ParallelForEachAsync()
+        {
+            int[] items = [1, 2, 3, 4];
 
+            await Parallel.ForEachAsync(items, async (item, token) =>
+            {
+                item++;
+                await Task.Yield();
+            });
+        }
+
+        public async void TaskRun()
+        {
+            int[] items = [1, 2, 3, 4];
+
+            List<Task> tasks = [];
+
+            tasks.Add(Task.Run(() => { }));
+
+            await Task.WhenAll(tasks);
+        }
+
+        public async void TaskStartNew()
+        {
+            int[] items = [1, 2, 3, 4];
+
+            List<Task> tasks = [];
+
+            tasks.Add(Task.Factory.StartNew(() => { }, TaskCreationOptions.LongRunning));
+
+            await Task.WhenAll(tasks);
         }
     }
 }

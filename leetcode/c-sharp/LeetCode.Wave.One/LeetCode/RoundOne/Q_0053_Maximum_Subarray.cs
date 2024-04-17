@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LeetCode.RoundOne
+﻿namespace LeetCode.RoundOne
 {
     public static class Q_0053_Maximum_Subarray
     {
         public static void Do()
         {
-            // 3, -1, 8, -5, 14
-            // 10, 9
-            // 19
-
             int index = 0;
             var res = Divide([1, 2, -1, 3, 5, -5, 3, 5, 6], ref index);
             Console.WriteLine(res);
@@ -25,8 +15,25 @@ namespace LeetCode.RoundOne
 
         public static int Divide2(int[] nums, int start, int end)
         {
-            var mid = start + (end - start) / 2;
+            var pivot = start + (end - start) / 2;
 
+            int left_max = int.MinValue;
+            int left_cur = 0;
+            for (int i = pivot - 1; i >= start; i--)
+            {
+                left_cur += nums[i];
+                left_max = Math.Max(left_max, left_cur);
+            }
+
+            int right_max = int.MinValue;
+            int right_cur = 0;
+            for (int i = pivot + 1; i <= end; i++)
+            {
+                right_max += nums[i];
+                right_max = Math.Max(right_max, right_cur);
+            }
+
+            int mid = 10;
             int l_total = Divide2(nums, start, mid);
 
             var r_total = Divide2(nums, mid + 1, end);

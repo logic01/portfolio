@@ -7,9 +7,12 @@ namespace Algorithms
     {
         static async Task Main(string[] args)
         {
-            await Practice.RoundOne.Parallelism.Do();
+            Practice.RoundThree.SlidingWindow.Do();
+            Practice.RoundThree.TreeBFS.Do();
+            Practice.RoundThree.TreeDFS.Do();
             Practice.RoundTwo.MergeIntervals.Do();
             Practice.RoundThree.MergeIntervals.Do();
+            await Practice.RoundOne.Parallelism.Do();
 
             Practice.RoundOne.MultiMap<int, int> map = [];
 

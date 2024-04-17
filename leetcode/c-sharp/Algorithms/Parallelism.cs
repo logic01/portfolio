@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,29 +10,92 @@ namespace Algorithms
 {
     public class Parallelism
     {
-        public async void Do()
+        private void Parallel_For()
         {
-            // List of items to execute on
-            List<int> items = [1, 2, 3, 4];
+            int[] items = [1, 2, 3, 4];
+
+            Parallel.For(0, items.Length, (index) =>
+            {
+                items[index]++;
+            });
+        }
+
+        private void Parallel_For_Local_Vars()
+        {
+            int[] items = [1, 2, 3, 4];
+
+            long total = 0;
+
+            Parallel.For<long>(0, items.Length, () => 0,
+            (j, loop, subtotal) =>
+            {
+                subtotal += items[j];
+                return subtotal;
+            },
+            subtotal => Interlocked.Add(ref total, subtotal));
+        }
+
+        private void Parallel_ForEach()
+        {
+            int[] items = [1, 2, 3, 4];
 
             // Thread Safe memory space
-            ConcurrentDictionary<int, int> dic = new ();
+            ConcurrentDictionary<int, int> dic = new();
 
             // Run this functionality in paralell
             Parallel.ForEach(items, i =>
             {
                 dic.TryAdd(i, i);
             });
+        }
+
+        private async void Parallel_ForEachAsync()
+        {
+            ConcurrentDictionary<int, int> dic = new();
+
+            int[] items = [1, 2, 3, 4];
+
+            await Parallel.ForEachAsync(items, async (item, token) =>
+            {
+                var key = item;
+                var val = item;
+                dic.AddOrUpdate(key, val, (key, oldValue) => oldValue++);
+                await Task.Yield();
+            });
+        }
+
+        private async void TaskRun()
+        {
+            int[] items = [1, 2, 3, 4];
+            ConcurrentDictionary<int, int> dic = new();
+
+            List<Task> tasks = [];
+            for (int i = 0; i < items.Length; i++)
+            {
+                // Create a task that adds data to an concurrent dictionary
+                var task = Task.Run(() => dic.AddOrUpdate(i, i, (i, oldValue) => oldValue++));
+
+                tasks.Add(task);
+            }
+
+            await Task.WhenAll(tasks);            
+        }
+
+        private async void TaskStartNew()
+        {
+            ConcurrentDictionary<int, int> dic = new();
+
+            int[] items = [1, 2, 3, 4];
 
             // Track our Tasks
             List<Task> tasks = [];
 
-            for (int i = 0; i < items.Count; i++)
+            for (int i = 0; i < items.Length; i++)
             {
                 tasks.Add(Task.Factory.StartNew(() =>
                 {
                     dic.TryAdd(i, i);
-                }));
+                }, TaskCreationOptions.LongRunning));
             }
 
             await Task.WhenAll(tasks);

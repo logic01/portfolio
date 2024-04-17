@@ -1,49 +1,56 @@
 ﻿using System.Collections;
+using System.Collections.Concurrent;
 
 
 namespace Algorithms.Practice.RoundOne
 {
-    public class MultiMap<T, V> : IEnumerable<KeyValuePair<T, List<V>>>
+    public class MultiMap<T, V> : IEnumerable<KeyValuePair<T, HashSet<V>>>
         where T : notnull
         where V : notnull
     {
-        private readonly Dictionary<T, List<V>> data = [];
+        private readonly ReaderWriterLockSlim _lock = new(LockRecursionPolicy.SupportsRecursion);
+
+        private readonly ConcurrentDictionary<T, HashSet<V>> data = [];
         public IEnumerable<T> Keys => data.Keys;
-        public IEnumerable<List<V>> Values => data.Values;
-
-        public void Add(T key, List<V> value)
-        {
-            data.Add(key, value);
-        }
-        public bool TryAdd(T key, List<V> value)
-        {
-            return data.TryAdd(key, value);
-        }
-
-        public void AddRange(IEnumerable<KeyValuePair<T, List<V>>> range)
-        {
-            foreach(var pair in range)
-            {
-                data.Add(pair.Key, pair.Value);
-            }
-        }
+        public IEnumerable<HashSet<V>> Values => data.Values;
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
 
-        public IEnumerator<KeyValuePair<T, List<V>>> GetEnumerator()
+        public IEnumerator<KeyValuePair<T, HashSet<V>>> GetEnumerator()
         {
             return data.GetEnumerator();
         }
 
-        public List<V> this[T key]
+        public HashSet<V> this[T key]
         {
             get
             {
                 return data[key];
             }
         }
+
+        public void Add(T key, V value)
+        {
+            data.AddOrUpdate(key, [value], (key, oldValue) =>
+            {
+                oldValue.Add(value);
+                return oldValue;
+            });
+        }
+
+        public bool TryAdd(T key, HashSet<V> value)
+        {
+            return data.TryAdd(key, value);
+        }
+
+        public void AddRange(IEnumerable<KeyValuePair<T, V>> range)
+        {
+            foreach (var pair in range)            
+                Add(pair.Key, pair.Value);            
+        }
+
     }
 }
