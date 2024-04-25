@@ -8,16 +8,36 @@ namespace Algorithms
         static async Task Main(string[] args)
         {
             Practice.RoundThree.SlidingWindow.Do();
+            Practice.RoundFour.SlidingWindows.Do();
+
+            var root = new Node(1);
+            root.Next = new Node(2);
+            root.Next.Next = new Node(3);
+            root.Next.Next.Next = new Node(4);
+            root.Next.Next.Next.Next = new Node(5);
+            root.Next.Next.Next.Next.Next = new Node(6);
+
+            // no cycle
+            Algorithms.Practice.RoundFour.FastAndSlowPointers.Do(root);
+
+            // create a cycle;
+            root.Next.Next.Next.Next = root;
+
+            // cycle
+            Algorithms.Practice.RoundFour.FastAndSlowPointers.Do(root);
+
+            Parallelism p = new Parallelism();
+            await p.WhenAny();
+            Console.ReadLine();
+
+            Practice.RoundThree.SlidingWindow.Do();
             Practice.RoundThree.TreeBFS.Do();
             Practice.RoundThree.TreeDFS.Do();
             Practice.RoundTwo.MergeIntervals.Do();
             Practice.RoundThree.MergeIntervals.Do();
-            await Practice.RoundOne.Parallelism.Do();
+     
 
             Practice.RoundOne.MultiMap<int, int> map = [];
-
-            map.Add(1, [1, 2, 3]);
-            map.Add(2, [1, 2, 3]);
 
             foreach (var key in map.Keys)
             {
@@ -74,30 +94,30 @@ namespace Algorithms
 
 
 
-            var root = new Node(1);
-            root.next = new Node(2);
-            root.next.next = new Node(3);
-            root.next.next.next = new Node(4);
+            root = new Node(1);
+            root.Next = new Node(2);
+            root.Next.Next = new Node(3);
+            root.Next.Next.Next = new Node(4);
 
             // no cycle
             FastAndSlowPointers.Do(root);
 
             // create a cycle;
-            root.next.next.next.next = root;
+            root.Next.Next.Next.Next = root;
 
             // cycle
             FastAndSlowPointers.Do(root);
 
             var root_two = new Node(1);
-            root_two.next = new Node(2);
-            root_two.next.next = new Node(3);
-            root_two.next.next.next = new Node(4);
+            root_two.Next = new Node(2);
+            root_two.Next.Next = new Node(3);
+            root_two.Next.Next.Next = new Node(4);
 
             // list is reversed
             root_two = ReverseLinkedList.Do(root_two);
 
             // add cycle
-            root_two.next.next.next.next = root_two;
+            root_two.Next.Next.Next.Next = root_two;
 
             Practice.RoundTwo.ReverseLinkedList.Do(root_two);
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,36 @@ namespace Algorithms
 {
     public class Parallelism
     {
+        public async Task WhenAny()
+        {
+            int[] range = Enumerable.Range(0, 10).ToArray();
+
+            List<Task<int>> tasks = [];
+
+            foreach(int r in range)            
+                tasks.Add(GetData());
+            
+            while(tasks.Count > 0)
+            {
+                Console.WriteLine($"count-{tasks.Count}");
+
+                var task = await Task.WhenAny(tasks);
+
+                if(task.IsCompletedSuccessfully)
+                    Console.WriteLine(task.Result);
+
+                tasks.Remove(task);
+            }
+        }
+
+        private async Task<int> GetData()
+        {
+            var r = new Random();
+            await Task.Delay(r.Next(500, 10000));
+
+            return r.Next(0, 1000);
+        }
+
         private void Parallel_For()
         {
             int[] items = [1, 2, 3, 4];

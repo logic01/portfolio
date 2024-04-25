@@ -1,34 +1,33 @@
-﻿namespace Algorithms.Practice.RoundThree
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Algorithms.Practice.RoundFive
 {
     public static class MergeIntervals
     {
         public static void Do()
         {
-            var res = Merge([[1, 2], [3, 4], [5, 6], [7, 8], [9, 0]]);
-            res = Merge([[1, 3], [1, 2]]);
-            res = Merge([[1, 3], [3, 4]]);
-            res = Merge([[1, 4], [3, 4]]);
+
         }
 
-        // Assumes [N][2]
         public static int[][] Merge(int[][] intervals)
         {
-            List<int[]> results = [];
-
-            // Sorting all the intervals (x, y) incase they are not in order
             intervals = intervals.Select(interval =>
             {
                 Array.Sort(interval);
                 return interval;
             }).ToArray();
 
-            // Sort the list of intervals based on the (x) coordinate
             Array.Sort(intervals, (a, b) => a[0].CompareTo(b[0]));
 
-            int[] current = intervals[0];
-            int resultIndex = 0;
+            List<int[]> results = [];
 
-            foreach (var interval in intervals)
+            int[] current = intervals[0];
+
+            foreach(var interval in intervals)
             {
                 if (interval[0] <= current[1])
                 {
@@ -36,18 +35,12 @@
                     continue;
                 }
 
-                results.Add(current);
                 current = interval;
             }
 
             results.Add(current);
 
             return results.ToArray();
-        }
-
-        public static int[,] Merge(int[,] intervals)
-        {
-            return intervals;
         }
     }
 }

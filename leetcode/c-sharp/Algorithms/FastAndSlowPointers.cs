@@ -21,14 +21,14 @@ namespace Algorithms
 
             while (true)
             {
-                if (fast.next == null || fast.next.next == null)
+                if (fast.Next == null || fast.Next.Next == null)
                 {
                     Console.WriteLine("No-Cycle");
                     return;
                 }
 
-                fast = fast.next.next;
-                slow = slow.next; // Will not be null because of fast null checks
+                fast = fast.Next.Next;
+                slow = slow.Next; // Will not be null because of fast null checks
 
                 if (fast == slow)
                 {

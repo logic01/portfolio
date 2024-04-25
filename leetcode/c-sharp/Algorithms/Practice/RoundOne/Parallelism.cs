@@ -1,7 +1,17 @@
-﻿namespace Algorithms.Practice.RoundOne
+﻿using System.Collections.Concurrent;
+
+namespace Algorithms.Practice.RoundOne
 {
     public class Parallelism
     {
+
+        public void ConcurrentCollections()
+        {
+            ConcurrentDictionary<int, string> cdic = [];
+            ConcurrentQueue<int> cque = [];
+            Stack<int> stack = [];
+        }
+
         public void ParallelFor()
         {
             int[] items = [1, 2, 3, 4];
@@ -21,6 +31,15 @@
                 index++;
                 await Task.Yield();
             });
+
+            var tasks = Enumerable.Range(0, 100).Select(async (index) =>
+            {
+                await Task.Yield();
+
+                return 1;
+            });
+
+            await Task.WhenAll(tasks);
         }
 
         public void ParallelForLocal()

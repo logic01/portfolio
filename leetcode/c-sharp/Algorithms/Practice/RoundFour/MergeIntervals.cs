@@ -1,4 +1,4 @@
-﻿namespace Algorithms.Practice.RoundThree
+﻿namespace Algorithms.Practice.RoundFour
 {
     public static class MergeIntervals
     {
@@ -10,19 +10,16 @@
             res = Merge([[1, 4], [3, 4]]);
         }
 
-        // Assumes [N][2]
         public static int[][] Merge(int[][] intervals)
         {
-            List<int[]> results = [];
+            var results = new int[intervals.Length][];
 
-            // Sorting all the intervals (x, y) incase they are not in order
             intervals = intervals.Select(interval =>
             {
                 Array.Sort(interval);
                 return interval;
             }).ToArray();
 
-            // Sort the list of intervals based on the (x) coordinate
             Array.Sort(intervals, (a, b) => a[0].CompareTo(b[0]));
 
             int[] current = intervals[0];
@@ -36,18 +33,13 @@
                     continue;
                 }
 
-                results.Add(current);
+                results[resultIndex++] = current;
                 current = interval;
             }
 
-            results.Add(current);
+            results[resultIndex] = current;
 
-            return results.ToArray();
-        }
-
-        public static int[,] Merge(int[,] intervals)
-        {
-            return intervals;
+            return results.Where(r => r != null).ToArray();
         }
     }
 }

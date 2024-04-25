@@ -12,7 +12,7 @@ namespace Algorithms
             if (root == null)
                 return root;
 
-            if (root.next == null)
+            if (root.Next == null)
                 return root;
 
             Node? cur = root;
@@ -21,11 +21,11 @@ namespace Algorithms
             // end of the list
             while (cur != null)
             {
-                var next = cur.next;
+                var temp = cur.Next;
 
-                cur.next = prev;
+                cur.Next = prev;
                 prev = cur;
-                cur = next;
+                cur = temp;
             }
 
             // this will be the last good node before we hit null end

@@ -14,9 +14,9 @@ namespace Algorithms.Practice.RoundTwo
 
             while (current != null)
             {
-                var next = current.next;
+                var next = current.Next;
 
-                current.next = last;
+                current.Next = last;
                 last = current;
                 current = next;
             }

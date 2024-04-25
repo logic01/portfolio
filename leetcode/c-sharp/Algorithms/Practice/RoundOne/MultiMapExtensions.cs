@@ -10,7 +10,7 @@ namespace Algorithms.Practice.RoundOne
         {
             var result = new MultiMap<T, V>();
 
-            result.AddRange(map1.Where((pair) => map2.Contains(pair)));
+          // result.AddRange(map1.Where((pair) => map2.Contains(pair)));
 
             return result;
         }

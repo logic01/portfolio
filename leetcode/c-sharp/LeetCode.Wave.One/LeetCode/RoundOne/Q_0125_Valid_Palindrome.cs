@@ -1,47 +1,36 @@
 ﻿
-namespace LeetCode
+namespace LeetCode.RoundOne
 {
     public static class Q_0125_Valid_Palindrome
     {
         public static bool IsPalindrome(string s)
         {
-
-            if (s.Length == 0)
-                return false;
-
-            if (s.Length == 1)
+            if (string.IsNullOrEmpty(s))
                 return true;
 
-            var i = 0;
-            var j = s.Length - 1;
-            s = s.ToUpper();
+            int i = 0;
+            int j = s.Length-1;
 
-            while (i < j)
+            while(i < j)
             {
-                bool skip = false;
-                if (!Char.IsLetter(s[i]) && !Char.IsDigit(s[i]))
+                if (!char.IsLetterOrDigit(s[i]))
                 {
                     i++;
-                    skip = true;
+                    continue;
                 }
 
-                if (!Char.IsLetter(s[j]) && !Char.IsDigit(s[j]))
+                if (!char.IsLetterOrDigit(s[j]))
                 {
                     j--;
-                    skip = true;
+                    continue;
                 }
 
-                if (skip)
-                    continue;
-
-                if (s[i] != s[j])
+                if (s[i++] != s[j--])
                     return false;
-
-                i++;
-                j--;
             }
 
             return true;
+            
         }
     }
 }

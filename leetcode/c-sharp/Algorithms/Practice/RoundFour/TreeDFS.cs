@@ -1,30 +1,29 @@
-﻿using System.Security.Cryptography;
-using Algorithms.Util;
+﻿using Algorithms.Util;
 
-namespace Algorithms
+namespace Algorithms.Practice.RoundFour
 {
-    public static class TreeDFS
+    public class TreeDFS
     {
         public static TreeNode? Do(TreeNode? root, int val)
         {
-            var stack = new Stack<TreeNode>();
+            if (root == null)
+                return root;
+
+            Stack<TreeNode> stack = [];
 
             stack.Push(root);
 
-            while (stack.Count != 0)
+            while (stack.Count > 0)
             {
                 var cur = stack.Pop();
 
-                Console.WriteLine($"{cur.Value}");
                 if (cur.Value == val)
                     return cur;
 
-                if (cur.Right != null)
-                    stack.Push(cur.Right);
-
                 if (cur.Left != null)
                     stack.Push(cur.Left);
-
+                if (cur.Right != null)
+                    stack.Push(cur.Right);
             }
 
             return null;

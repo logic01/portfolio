@@ -1,15 +1,18 @@
 ﻿using Algorithms.Util;
 
-namespace Algorithms.Practice.RoundOne
+namespace Algorithms.Practice.RoundFour
 {
-    public static class ReverseLinkedList
+    public class ReverseLinkedList
     {
-        public static Node Do(Node? root)
+        public static Node? Do(Node? root)
         {
-            Node? prev = null;
-            Node? cur = root;
+            if (root == null)
+                return root;
 
-            while (cur != null)
+            Node? cur = root;
+            Node? prev = null;
+
+            while(cur != null)
             {
                 var tmp = cur.Next;
 
