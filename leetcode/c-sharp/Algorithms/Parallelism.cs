@@ -1,36 +1,106 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Concurrent;
 
 namespace Algorithms
 {
     public class Parallelism
     {
+        public async IAsyncEnumerable<int> YieldReturnAsync()
+        {
+            for (int i = 0; i <= 200; i += 2)
+            {
+                // return i
+                yield return await Task.FromResult(i);
+
+                // stops yielding when we hit 199
+                if (i == 199)
+                    yield break;
+            }
+        }
+
+        public IEnumerable<int> YieldReturn()
+        {
+            for (int i = 0; i <= 200; i += 2)
+            {
+                // return i
+                yield return i;
+
+                // stops yielding when we hit 199
+                if (i == 199)
+                    yield break;
+            }
+        }
+
+        public async Task<bool> FromResult()
+        {
+            // When you're implementing an interface that allows asynchronous callers, but your implementation is synchronous.
+            // When you're stubbing/mocking asynchronous code for testing.
+            return await Task.FromResult(true);
+        }
+
         public async Task WhenAny()
         {
             int[] range = Enumerable.Range(0, 10).ToArray();
 
             List<Task<int>> tasks = [];
 
-            foreach(int r in range)            
+            foreach (int r in range)
                 tasks.Add(GetData());
-            
-            while(tasks.Count > 0)
+
+            while (tasks.Count > 0)
             {
                 Console.WriteLine($"count-{tasks.Count}");
 
                 var task = await Task.WhenAny(tasks);
 
-                if(task.IsCompletedSuccessfully)
+                if (task.IsCompletedSuccessfully)
                     Console.WriteLine(task.Result);
 
                 tasks.Remove(task);
             }
+        }
+
+        private async void TaskRun()
+        {
+            int[] items = [1, 2, 3, 4];
+            ConcurrentDictionary<int, int> dic = new();
+
+            List<Task> tasks = [];
+            for (int i = 0; i < items.Length; i++)
+            {
+                // Create a task that adds data to an concurrent dictionary
+                var task = Task.Run(() => dic.AddOrUpdate(i, i, (i, oldValue) => oldValue++));
+
+                tasks.Add(task);
+            }
+
+            await Task.WhenAll(tasks);
+        }
+
+        private async void TaskStartNew()
+        {
+            ConcurrentDictionary<int, int> dic = new();
+
+            int[] items = [1, 2, 3, 4];
+
+            // Track our Tasks
+            List<Task> tasks = [];
+
+            for (int i = 0; i < items.Length; i++)
+            {
+                tasks.Add(Task.Factory.StartNew(() =>
+                {
+                    dic.TryAdd(i, i);
+                }, TaskCreationOptions.LongRunning));
+            }
+
+            await Task.WhenAll(tasks);
+        }
+
+        private static async Task DoAsync()
+        {
+            // Makes this run async even if nothing under is called async
+            await Task.Yield();
+            await Task.Delay(1);
         }
 
         private async Task<int> GetData()
@@ -95,48 +165,5 @@ namespace Algorithms
             });
         }
 
-        private async void TaskRun()
-        {
-            int[] items = [1, 2, 3, 4];
-            ConcurrentDictionary<int, int> dic = new();
-
-            List<Task> tasks = [];
-            for (int i = 0; i < items.Length; i++)
-            {
-                // Create a task that adds data to an concurrent dictionary
-                var task = Task.Run(() => dic.AddOrUpdate(i, i, (i, oldValue) => oldValue++));
-
-                tasks.Add(task);
-            }
-
-            await Task.WhenAll(tasks);            
-        }
-
-        private async void TaskStartNew()
-        {
-            ConcurrentDictionary<int, int> dic = new();
-
-            int[] items = [1, 2, 3, 4];
-
-            // Track our Tasks
-            List<Task> tasks = [];
-
-            for (int i = 0; i < items.Length; i++)
-            {
-                tasks.Add(Task.Factory.StartNew(() =>
-                {
-                    dic.TryAdd(i, i);
-                }, TaskCreationOptions.LongRunning));
-            }
-
-            await Task.WhenAll(tasks);
-        }
-
-        private static async Task DoAsync()
-        {
-            // Makes this run async even if nothing under is called async
-            await Task.Yield();
-            await Task.Delay(1);
-        }
     }
 }

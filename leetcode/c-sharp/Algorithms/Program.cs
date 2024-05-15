@@ -35,7 +35,7 @@ namespace Algorithms
             Practice.RoundThree.TreeDFS.Do();
             Practice.RoundTwo.MergeIntervals.Do();
             Practice.RoundThree.MergeIntervals.Do();
-     
+
 
             Practice.RoundOne.MultiMap<int, int> map = [];
 
@@ -44,7 +44,7 @@ namespace Algorithms
                 var val = map[key];
             }
 
-            foreach(var pair in map)
+            foreach (var pair in map)
             {
                 Console.WriteLine(pair);
             }
